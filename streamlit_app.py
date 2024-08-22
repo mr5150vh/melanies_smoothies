@@ -38,6 +38,6 @@ if ingredients_list:
 fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
     if fruityvice_response.status_code == 200:
     # Display the response
-        st.text(fruityvice_response.json())
+        st.json(fruityvice_response.json())
     else:
         st.text(f"Request failed with status code {fruityvice_response.status_code}")
