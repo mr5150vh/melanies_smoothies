@@ -1,6 +1,7 @@
 # Import python packages
 import streamlit as st
 import requests
+import pandas as pd
 from snowflake.snowpark.functions import col
 
 # Write directly to the app
@@ -35,6 +36,15 @@ if ingredients_list:
         st.success(f'Your Smoothie is ordered! {name_on_order}', icon="✅")
         
 
-fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
+#fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
 # st.json(fruityvice_response.json())
-fv_df = st.dataframe(data=fruityvice_response.json(), use_container_width=True)
+#fv_df = st.dataframe(data=fruityvice_response.json(), use_container_width=True)
+
+fruityvice_response = requests.get("https://fruityvice.com/api/fruit/watermelon")
+fruityvice_data = fruityvice_response.json()
+
+# Convert the JSON data into a pandas DataFrame
+fv_df = pd.json_normalize(fruityvice_data)
+
+# Display the DataFrame
+st.dataframe(data=fv_df, use_container_width=True)
